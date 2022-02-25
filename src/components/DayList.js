@@ -8,8 +8,17 @@ export default function DayList(props){
     return Object.values(day);
 }
   const preparedDay = preparedDayData(props);
-  
-  const parsedDay = preparedDay.map(day => <DayListItem key={day.DayList} {...day} />)
+
+ ///////////////// do I need this code above or not
+
+  const parsedDay = preparedDay.map(props =>  <DayListItem
+    key={props.id} 
+    name={props.name} 
+    spots={props.spots} 
+    selected={props.name === props.value}
+    setDay={props.onChange}
+   />)
+   /////////////////// day or props /////
   return(
     <ul>
       <DayListItem 
