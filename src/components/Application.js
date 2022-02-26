@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import "components/Application.scss";
 import DayList from "./DayList";
@@ -6,25 +7,6 @@ import InterviewerListItem from "./InterviewerListItem";
 import InterviewerList from "./InterviewerList";
 import Appointment from "./Appointment";
 import { action } from "@storybook/addon-actions/dist/preview";
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  }
-
-];
 
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
@@ -73,12 +55,40 @@ const appointments = [
   }
 ];
 
-export default function Application(props) {
-  const [day, setDay] = useState('Monday');
+
+
+
+
+export default function Application() {
+
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+
+  const setDay = day => setState({ ...state, day });
+
+  const setDays = (days) => {
+    //... your code here ...
+    setState({ ...state, days })
+
+  }
+
+  useEffect(() => {
+    // const apiDay = `https://itunes.apple.com/search?term=beatles&country=CA&media=music&entity=album&attribute=artistTerm`;
+    console.log('useEffect on!');
+    axios.get("/api/days")
+      .then(response => {
+        setDays(response.data)
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
 
   const appointmentsList = appointments.map((appointment) => {
-
-
+    
     return (
       <Appointment 
         key={appointment.id}
@@ -99,11 +109,11 @@ export default function Application(props) {
       <hr className="sidebar__separator sidebar--centered" />
 
       <nav className="sidebar__menu">
-      <DayList 
-        days={days} 
-        value={day} 
-        onChange={setDay} 
-      />
+      <DayList
+        days={state.days}
+        day={state.day}
+        setDay={setState}
+/>
 
       </nav>
       <img
@@ -114,14 +124,8 @@ export default function Application(props) {
       
       </section>
       <section className="schedule">
+       {appointmentsList }
 
-      {/* <Appointment key="last" time="5pm" /> */}
-      {appointmentsList }
-
-      {/* <InterviewerList
-        interviewers={interviewers}
-        onChange={() => {}}
-      /> */}
       </section>
 
     </main>

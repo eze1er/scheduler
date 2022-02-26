@@ -4,14 +4,14 @@ import React from "react";
 import DayListItem from "./DayListItem";
 
 export default function DayList(props){
-  const preparedDayData = function(day) {
-    return Object.values(day);
-}
-  const preparedDay = preparedDayData(props.days);
+  // const preparedDayData = function(day) {
+    // return Object.values(day);
+ console.log(`This is props: ${props.days}`);
+  // const preparedDay = preparedDayData(props.days);
 
  ///////////////// do I need this code above or not
 
-  const dayListItems = preparedDay.map(day =>  <DayListItem
+  const dayListItems = props.days.map(day =>  <DayListItem
     key={day.id} 
     name={day.name} 
     spots={day.spots} 
