@@ -4,6 +4,8 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import InterviewerListItem from "./InterviewerListItem";
 import InterviewerList from "./InterviewerList";
+import Appointment from "./Appointment";
+import { action } from "@storybook/addon-actions/dist/preview";
 
 const days = [
   {
@@ -32,8 +34,60 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
+const appointments = [
+  {
+    id: 1,
+    time: "12pm",
+  },
+  {
+    id: 2,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      appointment:{
+        id: 3,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+  {
+    id: 3,
+    time: "2pm",
+  },
+  {
+    id: 4,
+    time: "3pm",
+    interview: {
+      student: "Archie Andrews",
+      appointment:{
+        id: 4,
+        name: "Cohana Roy",
+        avatar: "https://i.imgur.com/FK8V841.jpg",
+      }
+    }
+  },
+  {
+    id: 5,
+    time: "4pm",
+  }
+];
+
 export default function Application(props) {
   const [day, setDay] = useState('Monday');
+
+  const appointmentsList = appointments.map((appointment) => {
+
+
+    return (
+      <Appointment 
+        key={appointment.id}
+        interviewers={interviewers}
+        {...appointment}
+      />
+    );
+    });
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -60,10 +114,14 @@ export default function Application(props) {
       
       </section>
       <section className="schedule">
-      <InterviewerList
+
+      {/* <Appointment key="last" time="5pm" /> */}
+      {appointmentsList }
+
+      {/* <InterviewerList
         interviewers={interviewers}
-        onChange={action("setInterviewer")}
-      />
+        onChange={() => {}}
+      /> */}
       </section>
 
     </main>
