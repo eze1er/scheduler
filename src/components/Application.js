@@ -6,6 +6,8 @@ import DayList from "./DayList";
 import InterviewerListItem from "./InterviewerListItem";
 import InterviewerList from "./InterviewerList";
 import Appointment from "./Appointment";
+
+import { getAppointmentsForDay } from "helpers/selectors";
 import { action } from "@storybook/addon-actions/dist/preview";
 
 const interviewers = [
@@ -67,32 +69,39 @@ export default function Application() {
     appointments: {}
   });
 
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
   const setDay = day => setState({ ...state, day });
 
-  const setDays = (days) => {
-    //... your code here ...
-    setState({ ...state, days })
+  
 
-  }
+  // const setDays = (days) => {
+  //   //... your code here ...
+  //   setState({ ...state, days })
+
+  // }
 
   useEffect(() => {
-    // const apiDay = `https://itunes.apple.com/search?term=beatles&country=CA&media=music&entity=album&attribute=artistTerm`;
     console.log('useEffect on!');
-    axios.get("/api/days")
-      .then(response => {
-        setDays(response.data)
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
+
+    Promise.all([
+      axios.get('/api/days'),
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
+    ]).then((all) => {
+      const [first, second, third] = all;
+      setState(prev => ({...prev, days: first.data, appointments: second.data, interviewers: third.data,}));
+      console.log(first.data, second.data, third.data);
+    })
   }, []);
 
-  const appointmentsList = appointments.map((appointment) => {
-    
+  console.log('dailyAppointments:::', state.appointments)
+
+  const appointmentsList = dailyAppointments.map(appointment =>  {
+    console.log('appointment 1111 :', appointments)
     return (
       <Appointment 
         key={appointment.id}
-        interviewers={interviewers}
+        interviewers={state.interviewers}
         {...appointment}
       />
     );
@@ -112,7 +121,7 @@ export default function Application() {
       <DayList
         days={state.days}
         day={state.day}
-        setDay={setState}
+        setDay={setDay}
 />
 
       </nav>
