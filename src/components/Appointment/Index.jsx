@@ -8,13 +8,11 @@ import Empty from "components/Appointment/Empty";
 ////////////
 
 const onAdd = function () {
-  console.log("here we need to implement onAdd");
   return "on";
 };
 
 
 export default function Appointment(props) {
-  console.log('the props: ', props);
   return (
     <article className="appointment">
       {props.time}

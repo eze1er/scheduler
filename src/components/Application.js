@@ -7,7 +7,7 @@ import InterviewerListItem from "./InterviewerListItem";
 import InterviewerList from "./InterviewerList";
 import Appointment from "./Appointment";
 
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 import { action } from "@storybook/addon-actions/dist/preview";
 
 const interviewers = [
@@ -66,7 +66,8 @@ export default function Application() {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -81,7 +82,7 @@ export default function Application() {
   // }
 
   useEffect(() => {
-    console.log('useEffect on!');
+  
 
     Promise.all([
       axios.get('/api/days'),
@@ -90,14 +91,27 @@ export default function Application() {
     ]).then((all) => {
       const [first, second, third] = all;
       setState(prev => ({...prev, days: first.data, appointments: second.data, interviewers: third.data,}));
-      console.log(first.data, second.data, third.data);
     })
   }, []);
+//////////////////////
+ 
+// console.log('dailyAppointments:::', state.appointments)
+//   const appointments = getAppointmentsForDay(state, day);
 
-  console.log('dailyAppointments:::', state.appointments)
-
+//   const schedule = appointments.map((appointment) => {
+//     const interview = getInterview(state, appointment.interview);
+  
+//     return (
+//       <Appointment
+//         key={appointment.id}
+//         id={appointment.id}
+//         time={appointment.time}
+//         interview={interview}
+//       />
+//     );
+//   });
+//////////////////
   const appointmentsList = dailyAppointments.map(appointment =>  {
-    console.log('appointment 1111 :', appointments)
     return (
       <Appointment 
         key={appointment.id}
@@ -133,7 +147,7 @@ export default function Application() {
       
       </section>
       <section className="schedule">
-       {appointmentsList }
+       {appointmentsList}
 
       </section>
 

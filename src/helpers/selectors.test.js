@@ -31,7 +31,6 @@ const state = {
   }
 };
 
-console.log('test function', getAppointmentsForDay(state, "Monday"));
 
 test("getAppointmentsForDay returns an array", () => {
   const result = getAppointmentsForDay(state, "Monday");

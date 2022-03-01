@@ -8,7 +8,6 @@ function getAppointmentsForDay(state, day) {
   };
 
     const dayForAppointment = state.days.find((apDay) => apDay.name === day);
-    console.log('dayForAppointment:  ', dayForAppointment);
 
     if (dayForAppointment) {
       const appointmentsIds = dayForAppointment.appointments;
@@ -21,4 +20,9 @@ function getAppointmentsForDay(state, day) {
     }
 }
 
-module.exports = {getAppointmentsForDay};
+const getInterview = function(state, interview) {
+  for (const key in state) {
+}
+} 
+
+module.exports = {getAppointmentsForDay, getInterview};

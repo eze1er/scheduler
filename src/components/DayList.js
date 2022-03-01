@@ -6,8 +6,6 @@ import DayListItem from "./DayListItem";
 export default function DayList(props){
   // const preparedDayData = function(day) {
     // return Object.values(day);
- console.log(`This is props: ${props.days}`);
- console.log(props.days);
   // const preparedDay = preparedDayData(props.days);
 
  ///////////////// do I need this code above or not
