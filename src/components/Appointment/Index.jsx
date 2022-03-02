@@ -26,7 +26,7 @@ const onAdd = function () {
 };
 
 export default function Appointment(props) {
-  const { time, interview, interviewersForDay } = props;
+  const { time, interview, interviewers } = props;
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -96,7 +96,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === CREATE && (
-        <Form interviewers={interviewersForDay} onCancel={back} onSave={save} />
+        <Form interviewers={interviewers} onCancel={back} onSave={save} />
       )}
       {mode === SAVING && <Status message={"Saving"} />}
       {mode === DELETE && <Status message={"Deleting"} />}
