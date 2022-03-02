@@ -70,6 +70,13 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    if (state.appointments[id].interview) {
+      spotsRemaining("modify", id, state.days);
+    } else {
+    spotsRemaining("create", id, state.days);
+    }
+
+
     return axios
       .put(`/api/appointments/${id}`, appointment)
       .then((response) => {
@@ -82,26 +89,55 @@ export default function useApplicationData() {
   }
   // cancelInterviews
   function cancelInterview(id) {
-    const response = axios.delete(`/api/appointments/${id}`);
-    console.log('Response:  ', response);
-    return response;
-  }
-////////////////
-//   const spotsRemaining = function(origin, days, day, appointments, spots){
-//     for (const key in days) {
-//       if (days.key = day) {
-//         const spotsNumber = days.appointments.map(()) => days.appointments  {
-//       }
-//     }
-//     if (origin === "cancel") {
-//       spots--;
-//     }
-//     if (origin === "create") {
-//       spots++;
-//     }
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
 
-//     return 
-//   }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    spotsRemaining("cancel", id, state.days);
+    return axios.delete(`/api/appointments/${id}`)
+      .then((response) => {
+      console.log("response: ", response);
+      setState({
+        ...state,
+        appointments,
+      });
+    });
+  }
+  ///////////////
+    const countSpots = (state, day) => {
+  const currentDay = state.days.find((dayItem) => dayItem.name === day);
+  const appointmentIds = currentDay.appointments;
+
+  const interviewsForTheDay = appointmentIds.map(
+    (id) => state.appointments[id].interview
+  );
+
+  const emptyInterviewsForTheDay = interviewsForTheDay.filter((interview) => !interview);
+  const spots = emptyInterviewsForTheDay.length;
+
+  return spots;
+};
+////////////////
+  const spotsRemaining = function(origin, id,  days){
+    for (const day of days) {
+      const findAppointment = day.appointments.includes(id);
+      if (findAppointment) {
+        if (origin === "cancel") {
+          day.spots++;
+        } 
+        if (origin === "create") {
+          day.spots--;
+        }
+      }
+    }
+    // modify spots here
+    return 
+  }
   return { state, setDay, bookInterview, cancelInterview };
 }
 
