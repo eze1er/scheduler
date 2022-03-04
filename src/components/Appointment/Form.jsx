@@ -6,7 +6,7 @@ import InterviewerList from "components/InterviewerList";
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  const [name, setName] = useState(props.name || "");
+  // const [name, setName] = useState(props.name || "");
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -25,10 +25,8 @@ export default function Form(props) {
       return;
     }
     setError("");
-    props.onSave(name, interviewer);
+    props.onSave(student, interviewer);
   }
-  
-  console.log("students in form: ", props.student);
   
   return (
     <main className="appointment__card appointment__card--create">
@@ -38,10 +36,10 @@ export default function Form(props) {
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
+            value={student}
             placeholder="Enter Student Name"
-            // value={student}
             onChange={(event) => {
-              setName(event.target.value);
+              setStudent(event.target.value);
             }}
             data-testid="student-name-input"
           />
