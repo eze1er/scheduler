@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React from "react";
 
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header";
@@ -20,9 +20,9 @@ const DELETE = "DELETE";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-const onAdd = function () {
-  return "on";
-};
+// const onAdd = function () {
+//   return "on";
+// };
 
 export default function Appointment(props) {
   const { time, interview, interviewers } = props;
@@ -57,11 +57,11 @@ export default function Appointment(props) {
       .catch(() => transition("ERROR_DELETE"));
   }
 
-  function editInterview() {
-    // const studentSave = props.interview.student;
-    // const interviewerSave = interview.interviewer;
-    transition(EDIT);
-  }
+  // function editInterview() {
+  //   // const studentSave = props.interview.student;
+  //   // const interviewerSave = interview.interviewer;
+  //   transition(EDIT);
+  // }
 
   function onClose() {
     transition(SHOW, true);

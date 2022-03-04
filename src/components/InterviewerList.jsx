@@ -14,9 +14,9 @@ export default function InterviewerList(props) {
 
     // const [inputValue, setInputValue] = React.useState("");
 
-    const onChangeHandler = event => {
-      console.log('hello');
-    };
+    // const onChangeHandler = event => {
+    //   console.log('hello');
+    // };
 
     return (
       <InterviewerListItem 

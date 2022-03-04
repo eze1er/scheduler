@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getInterviewersForDay } from "helpers/selectors"
 import DayList from "./DayList";
 import useApplicationData from "../hooks/useApplicationData";

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 
 import "components/Application.scss";
-import DayList from "../components/DayList";
-import Appointment from "../components/Appointment";
-import {
-  getAppointmentsForDay,
-  getInterview,
-  getInterviewersForDay,
-} from "helpers/selectors";
+// import Appointment from "../components/Appointment";
+// import {
+//   // getAppointmentsForDay,
+//   // getInterview,
+//   // getInterviewersForDay,
+// } from "helpers/selectors";
 
 export default function useApplicationData() {
  
@@ -20,10 +20,10 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  // const dailyAppointments = getAppointmentsForDay(state, state.day);
   const setDay = (day) => setState({ ...state, day });
 
-  const interviewersForDay = getInterviewersForDay(state, state.day);
+  // const interviewersForDay = getInterviewersForDay(state, state.day);
 
   useEffect(() => {
     Promise.all([
@@ -42,20 +42,20 @@ export default function useApplicationData() {
     });
   }, []);
 
-  const appointmentsList = dailyAppointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview);
-    return (
-      <Appointment
-        key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        interview={interview}
-        interviewersForDay={interviewersForDay}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-      />
-    );
-  });
+  // const appointmentsList = dailyAppointments.map((appointment) => {
+  //   const interview = getInterview(state, appointment.interview);
+  //   return (
+  //     <Appointment
+  //       key={appointment.id}
+  //       id={appointment.id}
+  //       time={appointment.time}
+  //       interview={interview}
+  //       interviewersForDay={interviewersForDay}
+  //       bookInterview={bookInterview}
+  //       cancelInterview={cancelInterview}
+  //     />
+  //   );
+  // });
   // bookInterviews
   function bookInterview(id, interview) {
     const appointment = {
@@ -104,21 +104,7 @@ export default function useApplicationData() {
       });
     });
   }
-  ///////////////
-    const countSpots = (state, day) => {
-  const currentDay = state.days.find((dayItem) => dayItem.name === day);
-  const appointmentIds = currentDay.appointments;
 
-  const interviewsForTheDay = appointmentIds.map(
-    (id) => state.appointments[id].interview
-  );
-
-  const emptyInterviewsForTheDay = interviewsForTheDay.filter((interview) => !interview);
-  const spots = emptyInterviewsForTheDay.length;
-
-  return spots;
-};
-////////////////
   const spotsRemaining = function(origin, id,  days){
     for (const day of days) {
       const findAppointment = day.appointments.includes(id);
@@ -131,7 +117,6 @@ export default function useApplicationData() {
         }
       }
     }
-    // modify spots here
     return 
   }
   return { state, setDay, bookInterview, cancelInterview };
