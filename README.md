@@ -48,7 +48,11 @@ npm run storybook
 
 ## Final Product
 
-!["Tweet in mobile"](https://github.com/eze1er/tweeter/blob/main/docs/tweetmobile.png)
+!["Home page"](https://github.com/eze1er/scheduler/blob/master/public/screenshot/Screen%20Shot%202022-03-04%20at%202.08.15%20AM.png)
+
+!["Page with empty spots"](https://github.com/eze1er/scheduler/blob/master/public/screenshot/Screen%20Shot%202022-03-04%20at%202.08.52%20AM.png)
+
+!["Page with empty spots"](https://github.com/eze1er/scheduler/blob/master/public/screenshot/Screen%20Shot%202022-03-04%20at%202.09.38%20AM.png)
 
 
 [Author: Ezechiel Itimbien](#papaezechiel@gmail.com)
