@@ -44,8 +44,6 @@ export default function useApplicationData() {
 
   const appointmentsList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    console.log("Appointment ; ", appointment);
-    console.log("Interview: ", interview);
     return (
       <Appointment
         key={appointment.id}
@@ -80,7 +78,6 @@ export default function useApplicationData() {
     return axios
       .put(`/api/appointments/${id}`, appointment)
       .then((response) => {
-        console.log("response: ", response);
         setState({
           ...state,
           appointments,
@@ -101,7 +98,6 @@ export default function useApplicationData() {
     spotsRemaining("cancel", id, state.days);
     return axios.delete(`/api/appointments/${id}`)
       .then((response) => {
-      console.log("response: ", response);
       setState({
         ...state,
         appointments,

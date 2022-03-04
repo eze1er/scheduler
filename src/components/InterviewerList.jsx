@@ -10,14 +10,22 @@ export default function InterviewerList(props) {
     InterviewerList.propTypes = {
       interviewers: PropTypes.array.isRequired
     };
+    // console.log('setInter : ', setInterviewer)
+
+    // const [inputValue, setInputValue] = React.useState("");
+
+    const onChangeHandler = event => {
+      console.log('hello');
+    };
 
     return (
       <InterviewerListItem 
         key={interviewer.id}
         name={interviewer.name}
         avatar={interviewer.avatar}
+        // onChange={setInterviewer}
         selected={interviewer.id === props.value}
-        setInterviewer={() => props.onChange(interviewer.id)}    
+        // setInterviewer={() => props.onChange(interviewer.id)}    
       />
     );
     

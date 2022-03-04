@@ -39,16 +39,13 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    console.log("this the save function props: ", props);
 
     props
       .bookInterview(props.id, interview)
       .then(() => {
-        console.log('bookInterview.then: ')
         transition(SHOW)
       })
       .catch((error) => {
-        console.log('bookInterview.catch: ')
         transition(ERROR_SAVE, true)
       });
 
@@ -65,8 +62,6 @@ export default function Appointment(props) {
   function editInterview() {
     // const studentSave = props.interview.student;
     // const interviewerSave = interview.interviewer;
-    console.log("props1: ", props);
-    // console.log('props2: ', ...ProgressEvent.pros)
     transition(EDIT);
   }
 
@@ -74,6 +69,7 @@ export default function Appointment(props) {
     transition(SHOW, true);
 
   }
+
   return (
     <article className="appointment">
       <Header time={time} />
@@ -84,19 +80,19 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={interview.interviewer}
           onDelete={() => transition("CONFIRM")}
-          onEdit={() => transition("EDIT")}
+          onEdit={() =>  transition("EDIT")}
         />
       )}
       {mode === EDIT && (
-        <Show
+        <Form interviewers={interviewers} onCancel={back} onSave={save}
           student={props.interview.student}
-          interviewer={interview.interviewer}
+          interviewer={props.interview.interviewer.id}
           onDelete={() => transition("CONFIRM")}
           onEdit={() => transition("EDIT")}
         />
       )}
       {mode === CREATE && (
-        <Form interviewers={interviewers} onCancel={back} onSave={save} />
+        <Form  interviewers={interviewers} onCancel={back} onSave={save} />
       )}
       {mode === SAVING && <Status message={"Saving"} />}
       {mode === DELETE && <Status message={"Deleting"} />}

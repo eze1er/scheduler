@@ -10,7 +10,6 @@ export default function DayList(props){
 
  ///////////////// do I need this code above or not
 
-
   const dayListItems = props.days.map(day =>  <DayListItem
     key={day.id} 
     name={day.name} 
