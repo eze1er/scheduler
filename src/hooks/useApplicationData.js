@@ -1,18 +1,10 @@
-// import React, { useEffect, useState } from "react";
-import  { useEffect, useState } from "react";
+// hooks for scheduler application
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "components/Application.scss";
-// import Appointment from "../components/Appointment";
-// import {
-//   // getAppointmentsForDay,
-//   // getInterview,
-//   // getInterviewersForDay,
-// } from "helpers/selectors";
 
 export default function useApplicationData() {
- 
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -20,10 +12,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  // const dailyAppointments = getAppointmentsForDay(state, state.day);
   const setDay = (day) => setState({ ...state, day });
-
-  // const interviewersForDay = getInterviewersForDay(state, state.day);
 
   useEffect(() => {
     Promise.all([
@@ -32,7 +21,6 @@ export default function useApplicationData() {
       axios.get("/api/interviewers"),
     ]).then((all) => {
       const [days, appointments, interviewers] = all;
-
       setState((prev) => ({
         ...prev,
         days: days.data,
@@ -42,21 +30,9 @@ export default function useApplicationData() {
     });
   }, []);
 
-  // const appointmentsList = dailyAppointments.map((appointment) => {
-  //   const interview = getInterview(state, appointment.interview);
-  //   return (
-  //     <Appointment
-  //       key={appointment.id}
-  //       id={appointment.id}
-  //       time={appointment.time}
-  //       interview={interview}
-  //       interviewersForDay={interviewersForDay}
-  //       bookInterview={bookInterview}
-  //       cancelInterview={cancelInterview}
-  //     />
-  //   );
-  // });
-  // bookInterviews
+  // when appointment is booking we need to use this function for
+  // set appointment end modify the spots remaining
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -67,13 +43,12 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-
+    // is the check for a new appointment or an update
     if (state.appointments[id].interview) {
       spotsRemaining("modify", id, state.days);
     } else {
-    spotsRemaining("create", id, state.days);
+      spotsRemaining("create", id, state.days);
     }
-
 
     return axios
       .put(`/api/appointments/${id}`, appointment)
@@ -84,7 +59,8 @@ export default function useApplicationData() {
         });
       });
   }
-  // cancelInterviews
+
+  // function for cancelInterviews
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
@@ -96,30 +72,27 @@ export default function useApplicationData() {
       [id]: appointment,
     };
     spotsRemaining("cancel", id, state.days);
-    return axios.delete(`/api/appointments/${id}`)
-      .then((response) => {
+    return axios.delete(`/api/appointments/${id}`).then((response) => {
       setState({
         ...state,
         appointments,
       });
     });
   }
-
-  const spotsRemaining = function(origin, id,  days){
+  // function for count spotsRemaining. I should refactor it when I have time
+  const spotsRemaining = function (origin, id, days) {
     for (const day of days) {
       const findAppointment = day.appointments.includes(id);
       if (findAppointment) {
         if (origin === "cancel") {
           day.spots++;
-        } 
+        }
         if (origin === "create") {
           day.spots--;
         }
       }
     }
-    return 
-  }
+    return;
+  };
   return { state, setDay, bookInterview, cancelInterview };
 }
-
-// module.exports = {state, setDay, bookInterview, cancelInterview, appointmentsList}

@@ -2,11 +2,10 @@ import React, { useState } from "react";
 
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
-
+// form function
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  // const [name, setName] = useState(props.name || "");
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -17,8 +16,8 @@ export default function Form(props) {
   function cancel() {
     reset();
     props.onCancel();
-  };
-
+  }
+// validate to check that the student name is not empty
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");
@@ -27,7 +26,7 @@ export default function Form(props) {
     setError("");
     props.onSave(student, interviewer);
   }
-  
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
