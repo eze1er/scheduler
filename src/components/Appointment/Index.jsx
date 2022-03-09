@@ -78,7 +78,7 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => transition("CONFIRM")}
-          onEdit={() => transition("EDIT")}
+          // onEdit={() => transition("EDIT")}
         />
       )}
       {mode === CREATE && (
@@ -99,7 +99,7 @@ export default function Appointment(props) {
       {mode === ERROR_SAVE && (
         <Error
           onClose={() => {
-            transition("EMPTY");
+            back();
           }}
           message={"Error: could not save"}
         />
